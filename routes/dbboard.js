@@ -24,7 +24,7 @@ function isLogin(req, res, next) {
 router.get('/', isLogin, async (req, res) => {
   const ARTICLE = await db.getAllArticles();
   const articleCounts = ARTICLE.length;
-  res.render('dbboard', {
+  res.render('dbBoard', {
     ARTICLE,
     articleCounts,
     userId: req.session.userId,
