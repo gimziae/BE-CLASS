@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>COOKIE</title>
+</head>
+
+<body>
+  <h1>내가 만든 쿠키</h1>
+  <h2>너를 위해 구웠찌</h2>
+</body>
+
+<script>
+  // document : html 파일 자체
+  // window : 브라우저를 불러오는 것
+  //   console.log(document.cookie);
+  //   document.cookie = "user=kdt; expires=26 Nov 2022 10:00:00 GMT; path=/";
+  //   document.cookie = "test=test; expires=27 Nov 2022 10:00:00 GMT; path=/";
+  //   console.log(document.cookie);
+
+  //   window.localStorage.setItem('name', '김지애');
+  //   window.localStorage.setItem('name', '김지애');
+
+  //   const name = window.localStorage.getItem('name');
+  //   console.log(name);
+
+  //   const gimziae = {
+  //     name: '김지애',
+  //     age: 29,
+  //     gender: 'female',
+  //     expires: new Date() + 24 * 60 * 60 * 1000,
+  //   }
+
+  //   const jsonObj = JSON.stringify(gimziae);
+  //   window.localStorage.setItem('gimziae', jsonObj);
+
+  //   const json = window.localStorage.getItem('gimziae');
+  //   const obj = JSON.parse(json);
+  //   console.log(obj);
+
+  //   window.localStorage.setItem('gimziaee', '지애에요')
+  //   window.localStorage.setItem('pororo', '뽀로로에요')
+  //   window.localStorage.removeItem('pororo')
+  //   window.localStorage.clear()
+
+  window.localStorage.setItem('1', '1st')
+  window.localStorage.setItem('2', '2nd')
+  window.localStorage.setItem('3', '3rd')
+  window.localStorage.setItem('4', '4th')
+  window.localStorage.setItem('5', '5th')
+  window.localStorage.setItem('6', '6th')
+
+  for (let i = 0; i < window.localStorage.length; i++) {
+    const key = window.localStorage.key(i);
+    const value = window.localStorage.getItem(key);
+    console.log(`${i+1}번째 key 는 ${key}이고, value는 ${value}입니다!`)
+  }
+</script>
+
+</html>
