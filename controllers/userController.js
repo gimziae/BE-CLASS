@@ -1,34 +1,37 @@
 // @ts-check
-const mongoClient = require('./mongoConnect'); // 몽고디비에 접속할 수 있는 모듈 생성
+// 몽구스 커넥트
+const connect = require('./mongooseConnect');
+
+const User = require('../models/user');
+
+connect();
 
 const db = {
-  // getUsers: (cb) => {
-  //   // sql에서 데이터를 가져와라
-  //   connection.query('SELECT * FROM mydb.user', (err, data) => {
-  //     if (err) throw err;
-  //     console.log(data);
-  //     cb(data);
-  //   });
-  // },
-
   // 유저 중복 체크
   userCheck: async (userId) => {
-    const client = await mongoClient.connect(); // 일단 몽고디비에 접속!
-    const user = client.db('kdt4').collection('user'); // user 데이터에 접근
-
-    const findUser = await user.findOne({ id: userId }); // 한가지 데이터 접속
-    if (!findUser) return false; // findUser 값이 없다면 false 를 리턴(W? null 값이 리턴되므로 임의적으로 false로 리턴해준다)
-    return findUser; // 찾은 회원 정보 전달
+    try {
+      const findUser = await User.findOne({ id: userId });
+      console.log(findUser);
+      if (!findUser) return false;
+      return findUser;
+    } catch (err) {
+      console.error(err);
+      return { status: 'unexpected', err };
+    }
   },
 
   // 회원가입
   registerUser: async (newUser) => {
-    const client = await mongoClient.connect(); // 몽고디비에 접속
-    const user = client.db('kdt4').collection('user'); // user 데이터에 접근
-
-    const registerResult = await user.insertOne(newUser); // 데이터 추가
-    if (!registerResult.acknowledged) throw new Error('회원 등록 실패'); // 실패 시 에러
-    return true; // 성공 시 true 반환
+    // 에러가 발생할 것 같은 코드가 잇을 때 서버가 죽지(app crashed - waiting for file changes before starting...) 않게 도와주는 코드 try&&catch
+    try {
+      const registerResult = await User.create(newUser);
+      if (!registerResult) throw new Error('회원 등록 실패');
+      return true;
+    } catch (err) {
+      console.error(err);
+      if (err.code === 11000) return { status: 'duplicated' };
+      return { status: 'unexpected', err };
+    }
   },
 };
 

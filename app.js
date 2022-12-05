@@ -18,7 +18,7 @@ const userRouter = require('./routes/users');
 const postRouter = require('./routes/posts');
 const boardRouter = require('./routes/board');
 const dataRouter = require('./routes/data');
-const dbboardRouter = require('./routes/dbboard');
+const dbboardRouter = require('./routes/dbBoard');
 const loginRouter = require('./routes/login');
 const registerRouter = require('./routes/register');
 
