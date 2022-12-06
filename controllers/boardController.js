@@ -46,21 +46,32 @@ const db = {
   },
 
   // 특정 ID_PK를 가지는 게시글 수정하기
-  modifyArticle: async (id, modifyArticle) => {
-    const client = await mongoClient.connect();
-    const board = client.db('kdt4').collection('board');
+  // img가 주어 질 경우 img를 인자로 줘야댐!
+  modifyArticle: async (id, modifyArticle, img) => {
+    try {
+      const client = await mongoClient.connect();
+      const board = client.db('kdt4').collection('board');
 
-    const updateResult = await board.updateOne(
-      { _id: ObjectId(id) },
-      {
-        $set: {
-          TITLE: modifyArticle.title,
-          CONTENT: modifyArticle.content,
+      // 수정사항 객체로 만들기
+      const finalModifyAricle = {
+        TITLE: modifyArticle.title,
+        CONTENT: modifyArticle.content,
+      };
+
+      // 이미지파일이 있다면!
+      if (img !== undefined) finalModifyAricle.IMAGE = img.filename;
+
+      const updateResult = await board.updateOne(
+        { _id: ObjectId(id) },
+        {
+          $set: finalModifyAricle,
         },
-      },
-    );
-    if (!updateResult.acknowledged) throw new Error('수정 실패');
-    return true;
+      );
+      if (!updateResult.acknowledged) throw new Error('수정 실패');
+      return true;
+    } catch (err) {
+      console.error(err);
+    }
   },
 
   // 특정 ID_PK를 가지는 게시글 삭제하기

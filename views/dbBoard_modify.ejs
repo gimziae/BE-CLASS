@@ -134,7 +134,7 @@
         <h1>Write Mode</h1>
       </div>
       <!-- ID_PK : 게시물 값을 고유하게 표현하는 -->
-      <form action="/dbBoard/modify/<%= selectedArticle._id %>" method="POST" class="board_form">
+      <form action="/dbBoard/modify/<%= selectedArticle._id %>" method="POST" class="board_form" enctype="multipart/form-data">
         <div class="form_title">
           <h3>제목</h3>
           <input type="text" name="title" value="<%= selectedArticle.TITLE %>" required />
@@ -144,8 +144,24 @@
           <textarea name="content" id="content" cols="30" rows="10" required><%= selectedArticle.CONTENT %>
           </textarea>
         </div>
+        <div class="form_img">
+          <% console.log('AA',selectedArticle) %>
+          <% if (selectedArticle.IMAGE !== null && selectedArticle.IMAGE !== undefined) { %>
+          <p>기존 이미지</p>
+          <br>
+          <!-- img src 할 때 / 붙혀줘야 이미지 절대경로로 설정됨!@@ w? 절대경로로 설정 해줘야 파일로 바로 참조 가능 -->
+          <img src="/uploads/<%= selectedArticle.IMAGE %>" width="400" />
+          <br>
+          <hr>
+          <% } %>
+          <label id="img">이미지 수정 </label>
+          <input type="file" name="img" id="img" />
+        </div>
+        <br>
         <button type="submit">글 수정하기</button>
+
       </form>
+      <br>
     </div>
   </div>
 </body>

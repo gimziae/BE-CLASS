@@ -36,6 +36,7 @@ app.use(
 );
 
 app.use(express.static('public'));
+app.use('/uploads', express.static('uploads')); // 설정해줘야 uploads 폴더에 접근해 프론트단에서 볼 수 있다! 설정안해주면 사진이 안보임
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 
